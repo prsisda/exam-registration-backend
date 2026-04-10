@@ -1,0 +1,21 @@
+{
+  "name": "exam-registration-backend",
+  "version": "1.0.0",
+  "description": "Serverless backend for Klausuranmeldung (AWS Lambda + DynamoDB)",
+  "main": "app.js",
+  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
+  "author": "SAM CLI",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1027.0",
+    "@aws-sdk/lib-dynamodb": "^3.1027.0",
+    "axios": ">=1.6.0"
+  },
+  "scripts": {
+    "test": "mocha tests/unit/"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^11.7.5"
+  }
+}

@@ -1,0 +1,90 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Klausuranmeldung Serverless Backend (FH Aachen Demo)
+Globals:
+  Function:
+    Timeout: 10
+    Runtime: nodejs20.x
+    Architectures:
+    - x86_64
+Resources:
+  ExamsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Exams
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+      - AttributeName: examId
+        AttributeType: S
+      KeySchema:
+      - AttributeName: examId
+        KeyType: HASH
+  RegistrationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Registrations
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+      - AttributeName: registrationId
+        AttributeType: S
+      KeySchema:
+      - AttributeName: registrationId
+        KeyType: HASH
+  ExamsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: exams-function
+      CodeUri: ExamsFunction
+      Handler: app.handler
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: Exams
+      - DynamoDBCrudPolicy:
+          TableName: Registrations
+      Environment:
+        Variables:
+          EXAMS_TABLE: Exams
+          REGISTRATIONS_TABLE: Registrations
+      Events:
+        GetExams:
+          Type: Api
+          Properties:
+            Path: /exams
+            Method: get
+        GetRegistrations:
+          Type: Api
+          Properties:
+            Path: /registrations
+            Method: get
+        CreateRegistration:
+          Type: Api
+          Properties:
+            Path: /registrations
+            Method: post
+        DeleteRegistration:
+          Type: Api
+          Properties:
+            Path: /registrations/{id}
+            Method: delete
+        OptionsRegistrations:
+          Type: Api
+          Properties:
+            Path: /registrations
+            Method: options
+        OptionsRegistrationsId:
+          Type: Api
+          Properties:
+            Path: /registrations/{id}
+            Method: options
+        OptionsExams:
+          Type: Api
+          Properties:
+            Path: /exams
+            Method: options
+    Metadata:
+      SamResourceId: ExamsFunction
+Outputs:
+  ApiUrl:
+    Description: API Gateway endpoint URL
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
