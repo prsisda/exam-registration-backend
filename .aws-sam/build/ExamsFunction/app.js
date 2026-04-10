@@ -12,11 +12,11 @@ const ddb = DynamoDBDocumentClient.from(client);
 
 const EXAMS_TABLE = process.env.EXAMS_TABLE;
 const REGISTRATIONS_TABLE = process.env.REGISTRATIONS_TABLE;
-const HOST = "http://localhost:5173";
+// const HOST = "http://localhost:5173";
 
 const corsHeaders = {
   "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": HOST,
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "Content-Type",
   "Access-Control-Allow-Methods": "GET,POST,DELETE,OPTIONS",
 };

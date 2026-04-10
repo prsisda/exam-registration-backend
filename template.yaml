@@ -13,7 +13,7 @@ Resources:
   ExamsTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: Exams
+      TableName: ExamsDemo
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: examId
@@ -25,7 +25,7 @@ Resources:
   RegistrationsTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: Registrations
+      TableName: RegistrationsDemo
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: registrationId
@@ -37,7 +37,7 @@ Resources:
   ExamsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: exams-function
+      FunctionName: exams-function-demo
       CodeUri: exams/
       Handler: app.handler
       Policies:
